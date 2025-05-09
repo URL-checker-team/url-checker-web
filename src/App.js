@@ -1,12 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UrlChecker from "./components/UrlChecker";
+import Login from "./components/Login.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <UrlChecker />
-      <h1 className="text-3xl text-red-500 font-bold">Tailwind is working!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/checker" element={<UrlChecker />} />
+      </Routes>
+    </Router>
   );
 }
 
