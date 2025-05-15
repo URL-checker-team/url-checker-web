@@ -15,20 +15,33 @@ function Login() {
         password,
       });
       localStorage.setItem("token", res.data.token);
-      navigate("/checker");
-      // Redirect or update UI
+      navigate("/admin/report");
     } catch (err) {
       console.error("Login failed", err);
     }
   };
 
+  const handleBackHome = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 relative">
+      {/* Top-right Back Button */}
+      <div className="absolute top-4 right-6">
+        <button
+          onClick={handleBackHome}
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+        >
+          Back to Home
+        </button>
+      </div>
+
       <form
         onSubmit={handleLogin}
         className="bg-white shadow-md rounded-lg p-8 w-full max-w-sm"
       >
-        <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center">Admin Login</h2>
 
         <input
           type="email"

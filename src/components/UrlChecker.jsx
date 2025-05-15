@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-console.log("UrlChecker component loaded");
-
 export default function UrlChecker() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
@@ -23,7 +21,8 @@ export default function UrlChecker() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4 space-y-8">
+      {/* input part */}
       <div className="w-full max-w-xl p-6 border rounded shadow bg-white">
         <h2 className="text-2xl font-bold mb-4 text-center">
           🔍 Malicious URL Detector
@@ -45,12 +44,19 @@ export default function UrlChecker() {
             {loading ? "Checking..." : "Check URL"}
           </button>
         </form>
-        {result && (
-          <div className="mt-4 text-lg text-center">
-            <strong>Result:</strong> {result}
-          </div>
-        )}
       </div>
+
+      {/* result part */}
+      {result && (
+        <div className="w-full max-w-xl p-6 border rounded shadow bg-green-50">
+          <h3 className="text-xl font-semibold text-center mb-2">
+            Scan Result
+          </h3>
+          <p className="text-center text-lg text-gray-800">
+            <strong>Result:</strong> {result}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
