@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SecurityIcon from "@mui/icons-material/Security";
+import AdminLoginDrawer from "./home/AdminLoginDrawer";
 
 export default function Home() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleCheck = async (e) => {
     e.preventDefault();
@@ -21,10 +22,6 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const goToLogin = () => {
-    navigate("/login");
   };
 
   return (
@@ -42,7 +39,7 @@ export default function Home() {
         {/* Admin Login */}
         <div className="absolute top-4 right-6">
           <button
-            onClick={goToLogin}
+            onClick={() => setShowLogin(true)}
             className="border border-blue-500 text-blue-500 px-3 py-1 rounded text-sm hover:bg-blue-50"
           >
             Admin Login
@@ -123,6 +120,11 @@ export default function Home() {
             );
           })()}
       </div>
+      {/* Admin Login Drawer */}
+      <AdminLoginDrawer
+        isOpen={showLogin}
+        onClose={() => setShowLogin(false)}
+      />
     </div>
   );
 }

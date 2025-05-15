@@ -13,7 +13,7 @@ export default function AdminLayout() {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Clear token or session
-    navigate("/login"); // Redirect to login
+    navigate("/"); // Redirect to login
   };
 
   return (
