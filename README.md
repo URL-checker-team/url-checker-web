@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# URL Checker Web
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+A web-based tool for checking and analyzing URLs using modern front-end technologies such as **React 19**, **Material UI**, **Tailwind CSS**, and **Axios**.
+
+---
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd url-checker-web
+
+### 2. Install dependencies
+
+Make sure you have Node.js (v18 or later) and npm installed.
+
+npm install
+
 
 ## Available Scripts
 
