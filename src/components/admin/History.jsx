@@ -1,33 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function History() {
+  const [history, setHistory] = useState([]);
+
   useEffect(() => {
     document.title = "Admin Dashboard - History";
-  }, []);
 
-  // Fake scan history data
-  const history = [
-    {
-      url: "http://malicious-example.com",
-      result: "Malicious",
-      checkedAt: "2025-05-15 14:30",
-    },
-    {
-      url: "https://safe-site.org",
-      result: "Safe",
-      checkedAt: "2025-05-15 13:45",
-    },
-    {
-      url: "http://suspicious-domain.net",
-      result: "Malicious",
-      checkedAt: "2025-05-14 18:10",
-    },
-    {
-      url: "https://example.com",
-      result: "Safe",
-      checkedAt: "2025-05-14 17:00",
-    },
-  ];
+    axios
+      .get("http://localhost:5050/history")
+      .then((res) => setHistory(res.data))
+      .catch((err) => console.error("Failed to fetch history:", err));
+  }, []);
 
   return (
     <div>
@@ -48,7 +32,9 @@ export default function History() {
                 <td className="px-6 py-4">{item.url}</td>
                 <td
                   className={`px-6 py-4 font-semibold ${
-                    item.result === "Malicious"
+                    ["phishing", "malware", "defacement"].includes(
+                      item.result.toLowerCase()
+                    )
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
