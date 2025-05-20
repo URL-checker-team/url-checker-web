@@ -30,7 +30,7 @@ export default function Home() {
       return;
     }
 
-    setUrlError(""); // 清除旧错误
+    setUrlError(""); 
     setStep("loading");
 
     try {
@@ -143,7 +143,7 @@ export default function Home() {
                 {isBenign ? (
                   <SafeResult result={result} url={url} />
                 ) : (
-                  <MaliciousResult result={result} />
+                  <MaliciousResult result={result} url={url} />
                 )}
                 <button
                   onClick={handleReset}
