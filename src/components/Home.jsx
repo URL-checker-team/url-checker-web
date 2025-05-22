@@ -30,11 +30,13 @@ export default function Home() {
       return;
     }
 
-    setUrlError(""); 
+    setUrlError("");
     setStep("loading");
 
     try {
-      const response = await axios.post("http://localhost:5050/", { url });
+      const response = await axios.post("http://localhost:5050/api/predict", {
+        url,
+      });
 
       // set time out
       setTimeout(() => {

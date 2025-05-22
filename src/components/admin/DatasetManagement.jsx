@@ -15,23 +15,67 @@ export default function DatasetManagement() {
 
   const handleUpload = () => {
     if (!file) {
-      setStatusMessage("Please select a file to upload.");
+      setStatusMessage("❌ Please select a file to upload.");
       return;
     }
 
-    // Simulate upload
-    setStatusMessage(`📤 Uploading ${file.name}...`);
-    setTimeout(() => {
-      setStatusMessage("✅ Dataset uploaded successfully!");
-    }, 1500);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setStatusMessage(`Uploading ${file.name}...`);
+
+    fetch("http://localhost:5050/api/upload-dataset", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.filename) {
+          setStatusMessage("✅ Dataset uploaded successfully.");
+          localStorage.setItem("uploaded_filename", data.filename); // 🧠 存下来用于训练
+        } else {
+          setStatusMessage(
+            "❌ Upload failed: " + (data.error || "Unknown error")
+          );
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setStatusMessage("❌ Upload failed.");
+      });
   };
 
   const handleTrainModel = () => {
-    setStatusMessage("🧠 Training model...");
-    // Simulate training
-    setTimeout(() => {
-      setStatusMessage("✅ Model trained successfully!");
-    }, 2000);
+    const filename = localStorage.getItem("uploaded_filename");
+
+    if (!filename) {
+      setStatusMessage("❌ Please upload a dataset first.");
+      return;
+    }
+
+    setStatusMessage("Training model...");
+
+    fetch("http://localhost:5050/api/train-model", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filename }), //to backend
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          setStatusMessage("✅ Model trained successfully.");
+        } else {
+          setStatusMessage(
+            "❌ Training failed: " + (data.error || "Unknown error")
+          );
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setStatusMessage("❌ Training request failed.");
+      });
   };
 
   return (
