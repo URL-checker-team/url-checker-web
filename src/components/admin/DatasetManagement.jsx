@@ -36,7 +36,7 @@ export default function DatasetManagement() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">🗂️ Dataset Management</h1>
+      <h1 className="text-2xl font-bold mb-6">Dataset Management</h1>
 
       {/* Upload Dataset Section */}
       <div className="bg-white p-6 rounded shadow max-w-xl space-y-4">

@@ -3,6 +3,8 @@ import axios from "axios";
 
 export default function History() {
   const [history, setHistory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     document.title = "Admin Dashboard - History";
@@ -13,9 +15,22 @@ export default function History() {
       .catch((err) => console.error("Failed to fetch history:", err));
   }, []);
 
+  const totalPages = Math.ceil(history.length / itemsPerPage);
+
+  const currentItems = history.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">🕓 Scan History</h1>
+      <h1 className="text-2xl font-bold mb-6">Scan History</h1>
 
       <div className="overflow-x-auto bg-white shadow rounded">
         <table className="min-w-full table-auto text-left">
@@ -27,7 +42,7 @@ export default function History() {
             </tr>
           </thead>
           <tbody className="text-gray-800">
-            {history.map((item, idx) => (
+            {currentItems.map((item, idx) => (
               <tr key={idx} className="border-t hover:bg-gray-50">
                 <td className="px-6 py-4">{item.url}</td>
                 <td
@@ -46,6 +61,29 @@ export default function History() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-between items-center mt-4">
+        <button
+          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
+        <span className="text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
