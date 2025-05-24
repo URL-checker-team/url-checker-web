@@ -77,32 +77,19 @@ export default function ReportSummary() {
           <Typography variant="h6">{summary.latestCheck}</Typography>
         </Paper>
       </Box>
-
-      {/* <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-          URL Check Trends (Last 7 Days)
-        </Typography>
-
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={chartData}>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="malicious" fill="#f44336" name="Malicious URLs" />
-            <Bar dataKey="safe" fill="#4caf50" name="Safe URLs" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Paper> */}
-
-      <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-          URL Check Trends (Last 7 Days)
-        </Typography>
-
-        <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
-          <Box flex={1} minWidth={0}>
+      {/* chart card */}
+      <Box
+        display="grid"
+        gridTemplateColumns={{ xs: "1fr", md: "repeat(4, 1fr)" }}
+        gap={2}
+        mb={4}
+      >
+        {/* chart part*/}
+        <Box gridColumn={{ xs: "span 4", md: "span 3" }}>
+          <Paper elevation={3} sx={{ p: 3, height: "100%" }}>
+            <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+              URL Check Trends (Last 7 Days)
+            </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
@@ -114,17 +101,13 @@ export default function ReportSummary() {
                 <Bar dataKey="safe" fill="#4caf50" name="Safe URLs" />
               </BarChart>
             </ResponsiveContainer>
-          </Box>
+          </Paper>
+        </Box>
 
-          <Box
-            flexShrink={0}
-            minWidth="250px"
-            bgcolor="#fafafa"
-            p={2}
-            borderRadius={2}
-            boxShadow={1}
-          >
-            <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+        {/* Top 3 Malicious Types */}
+        <Box gridColumn={{ xs: "span 4", md: "span 1" }}>
+          <Paper elevation={3} sx={{ p: 3, height: "100%" }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
               Top 3 Malicious Types
             </Typography>
             {summary.topMaliciousTypes &&
@@ -148,9 +131,9 @@ export default function ReportSummary() {
                 No data available
               </Typography>
             )}
-          </Box>
+          </Paper>
         </Box>
-      </Paper>
+      </Box>
     </Box>
   );
 }
